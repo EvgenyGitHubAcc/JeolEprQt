@@ -8,17 +8,17 @@
 #include <iostream>
 #include "data.h"
 #include "converter.h"
+#include "message.h"
 
 class File
 {
 private:
-    QTime * timer;
     QStringList srcFiles;
     QStringList dataString;
     QStringList potList;
     void purifyFile(QFile &);
 public:
-    File(QTime *);
+    File();
     QStringList & loadSettings();
     void loadPotList();
     void readAllFiles(QList<Data> &);
@@ -27,12 +27,6 @@ public:
     void writeSecondIntegrationMatrix(Converter &, double, double);
     void writeSettingsLoaded();
     void writeTotalMatrix(Converter &);
-    void writeTime();
-    void writeFinishedFileName(const QString &);
-    void writeReadFileName(const QString &);
-    void writeMatrixIsReady();
-    void writeFirstIntMatrixIsReady();
-    void writeSecIntMatrixIsReady();
     QString genPotLine(int);
     QString genFileNameLine();
     const QStringList & getSrcFiles();

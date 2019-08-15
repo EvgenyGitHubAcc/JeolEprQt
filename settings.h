@@ -1,27 +1,25 @@
 #ifndef SETTINGS_H
 #define SETTINGS_H
 
-#include <QString>
 #include <QStringList>
 
 class Settings
 {
 private:
-    bool convert;
-    bool getMatrix;
-    bool integrateFirst;
-    bool integrateSecond;
-    double leftEdge;
-    double rightEdge;
+    static bool convert;
+    static bool getMatrix;
+    static bool integrateFirst;
+    static bool integrateSecond;
+    static double leftEdge;
+    static double rightEdge;
 public:
-    Settings();
-    Settings(const QStringList &);
-    bool getConvert() const;
-    bool getIntegrateFirst() const;
-    bool getIntegrateSecond() const;
-    bool getGetMatrix() const;
-    double getLeftEdge() const;
-    double getRightEdge() const;
+    static void loadSettings(const QStringList &);
+    static bool getConvert();
+    static bool getIntegrateFirst();
+    static bool getIntegrateSecond();
+    static bool getGetMatrix();
+    static double getLeftEdge();
+    static double getRightEdge();
 };
 
 #endif // SETTINGS_H

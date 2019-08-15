@@ -21,6 +21,7 @@ SOURCES += \
         data.cpp \
         file.cpp \
         main.cpp \
+        message.cpp \
         settings.cpp
 
 # Default rules for deployment.
@@ -32,4 +33,5 @@ HEADERS += \
     converter.h \
     data.h \
     file.h \
+    message.h \
     settings.h

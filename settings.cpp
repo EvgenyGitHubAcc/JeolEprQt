@@ -1,41 +1,43 @@
 #include "settings.h"
 
-bool Settings::getConvert() const
+bool Settings::convert = 0;
+bool Settings::getMatrix = 0;
+bool Settings::integrateFirst = 0;
+bool Settings::integrateSecond = 0;
+double Settings::leftEdge = 0;
+double Settings::rightEdge = 0;
+
+bool Settings::getConvert()
 {
     return convert;
 }
 
-bool Settings::getIntegrateFirst() const
+bool Settings::getIntegrateFirst()
 {
     return integrateFirst;
 }
 
-bool Settings::getIntegrateSecond() const
+bool Settings::getIntegrateSecond()
 {
     return integrateSecond;
 }
 
-bool Settings::getGetMatrix() const
+bool Settings::getGetMatrix()
 {
     return getMatrix;
 }
 
-double Settings::getLeftEdge() const
+double Settings::getLeftEdge()
 {
     return leftEdge;
 }
 
-double Settings::getRightEdge() const
+double Settings::getRightEdge()
 {
     return rightEdge;
 }
 
-Settings::Settings()
-{
-
-}
-
-Settings::Settings(const QStringList & list)
+void Settings::loadSettings(const QStringList & list)
 {
     convert = list[0].toInt();
     getMatrix = list[1].toInt();

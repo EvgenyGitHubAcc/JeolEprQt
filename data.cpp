@@ -8,6 +8,7 @@ Point::Point(double _field, double _intensity)
 
 Data::Data()
 {
+
 }
 
 Data::Data(QStringList & list)

@@ -1,8 +1,8 @@
 #include "converter.h"
 
-Converter::Converter(QTime * _timer)
+Converter::Converter()
 {
-    timer = _timer;
+
 }
 
 QList<Data> & Converter::getDataList()
@@ -50,11 +50,9 @@ int Converter::getDataVectSize()
 
 void Converter::integrateAllData(const QStringList & srcFiles)
 {
-    QString outStr;
     for(int i = 0; i < dataList.size(); ++i)
     {
         dataList[i].integrate();
-        outStr = QString("File %1 integrated. %2 msec").arg(srcFiles[i]).arg(timer->elapsed());
-        std::cout << outStr.toStdString() << std::endl;
+        Message::writeFileIntegrated(srcFiles[i]);
     }
 }

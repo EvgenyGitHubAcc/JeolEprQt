@@ -1,10 +1,11 @@
 #ifndef DATA_H
 #define DATA_H
 
-#include "settings.h"
-
 #include <QTextStream>
 #include <QVector>
+#include "settings.h"
+
+
 
 struct Point
 {

@@ -1,14 +1,18 @@
 #include "converter.h"
 #include "file.h"
 #include "settings.h"
+#include "message.h"
 
 int main()
 {
     QTime timer;
 
-    File fileWork(&timer);
-    Converter conv(&timer);
-    Settings sett(fileWork.loadSettings());
+    File fileWork;
+    Converter conv;
+
+    Settings::loadSettings(fileWork.loadSettings());
+
+    Message::setTimer(&timer);
 
     timer.start();
 
@@ -17,24 +21,24 @@ int main()
     fileWork.readAllFiles(conv.getDataList());
     fileWork.loadPotList();
 
-    if(sett.getConvert())
+    if(Settings::getConvert())
     {
         fileWork.writeAllFiles(conv.getDataList());
     }
-    if(sett.getGetMatrix())
+    if(Settings::getGetMatrix())
     {
         fileWork.writeTotalMatrix(conv);
     }
-    if(sett.getIntegrateFirst() || sett.getIntegrateSecond())
+    if(Settings::getIntegrateFirst() || Settings::getIntegrateSecond())
     {
         conv.integrateAllData(fileWork.getSrcFiles());
-        if(sett.getIntegrateFirst())
+        if(Settings::getIntegrateFirst())
         {
-            fileWork.writeFirstIntegrationMatrix(conv, sett.getLeftEdge(), sett.getRightEdge());
+            fileWork.writeFirstIntegrationMatrix(conv, Settings::getLeftEdge(), Settings::getRightEdge());
         }
-        if (sett.getIntegrateSecond())
+        if (Settings::getIntegrateSecond())
         {
-            fileWork.writeSecondIntegrationMatrix(conv, sett.getLeftEdge(), sett.getRightEdge());
+            fileWork.writeSecondIntegrationMatrix(conv, Settings::getLeftEdge(), Settings::getRightEdge());
         }
     }
 

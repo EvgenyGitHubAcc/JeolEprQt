@@ -6,14 +6,14 @@
 #include <QTime>
 #include <iostream>
 #include "data.h"
+#include "message.h"
 
 class Converter
 {
 private:
     QList <Data> dataList;
-    QTime * timer;
 public:
-    Converter(QTime *);
+    Converter();
     void integrateAllData(const QStringList &);
     QList<Data> & getDataList();
     QString createFirstIntMatrixRaw(int);

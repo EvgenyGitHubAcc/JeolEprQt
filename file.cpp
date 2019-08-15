@@ -1,8 +1,8 @@
 #include "file.h"
 
-File::File(QTime * _timer)
+
+File::File()
 {
-    timer = _timer;
     QDir fileInputPath = QDir(QString("%1/%2").arg(QDir::currentPath()).arg("Src"));
     QStringList nameFilter("*.txt");
     srcFiles = fileInputPath.entryList(nameFilter);
@@ -56,7 +56,7 @@ void File::readAllFiles(QList<Data> & dataList)
         Data obj(dataString);
         dataList.append(obj);
 
-        writeReadFileName(el);
+        Message::writeReadFileName(el);
         dataString.clear();
     }
 }
@@ -77,7 +77,7 @@ void File::writeAllFiles(QList<Data> & dataList)
             QTextStream out(&file);
             out << QString("%1\n%2\n").arg(srcFiles[i]).arg(potList[i]);
             out << dataList[i];
-            writeFinishedFileName(srcFiles[i]);
+            Message::writeFinishedFileName(srcFiles[i]);
             file.close();
         }
     }
@@ -94,7 +94,7 @@ void File::writeAllFiles(QList<Data> & dataList)
             QTextStream out(&file);
             out << QString("%1\n").arg(srcFiles[i]);
             out << dataList[i];
-            writeFinishedFileName(srcFiles[i]);
+            Message::writeFinishedFileName(srcFiles[i]);
             file.close();
         }
     }
@@ -154,7 +154,7 @@ void File::writeFirstIntegrationMatrix(Converter & conv, double leftEdge = 0, do
     {
         out << QString("%1\n").arg(conv.createFirstIntMatrixRaw(i));
     }
-    writeFirstIntMatrixIsReady();
+    Message::writeFirstIntMatrixIsReady();
     file.close();
 }
 
@@ -184,7 +184,7 @@ void File::writeSecondIntegrationMatrix(Converter & conv, double leftEdge = 0, d
     {
         out << QString("%1\n").arg(conv.createSecIntMatrixRaw(i));;
     }
-    writeSecIntMatrixIsReady();
+    Message::writeSecIntMatrixIsReady();
     file.close();
 }
 
@@ -210,7 +210,7 @@ void File::writeTotalMatrix(Converter & conv)
     {
         out << QString("%1\n").arg(conv.createMatrixRaw(i));
     }
-    writeMatrixIsReady();
+    Message::writeMatrixIsReady();
     file.close();
 }
 
@@ -236,38 +236,38 @@ void File::purifyFile(QFile & file)
    }
 }
 
-void File::writeFinishedFileName(const QString & inStr)
-{
-    QString outStr = QString("File %1 ready. %2 msec").arg(inStr).arg(timer->elapsed());
-    std::cout << outStr.toStdString() << std::endl;
-}
+//void File::writeFinishedFileName(const QString & inStr)
+//{
+//    QString outStr = QString("File %1 ready. %2 msec").arg(inStr).arg(timer->elapsed());
+//    std::cout << outStr.toStdString() << std::endl;
+//}
 
-void File::writeReadFileName(const QString & inStr)
-{
-    QString outStr = QString("File %1 loaded. %2 msec").arg(inStr).arg(timer->elapsed());
-    std::cout << outStr.toStdString() << std::endl;
-}
+//void File::writeReadFileName(const QString & inStr)
+//{
+//    QString outStr = QString("File %1 loaded. %2 msec").arg(inStr).arg(timer->elapsed());
+//    std::cout << outStr.toStdString() << std::endl;
+//}
 
-void File::writeMatrixIsReady()
-{
-    QString outStr = QString("Total matrix is ready. %1 msec").arg(timer->elapsed());
-    std::cout << outStr.toStdString() << std::endl;
-}
+//void File::writeMatrixIsReady()
+//{
+//    QString outStr = QString("Total matrix is ready. %1 msec").arg(timer->elapsed());
+//    std::cout << outStr.toStdString() << std::endl;
+//}
 
-void File::writeFirstIntMatrixIsReady()
-{
-    QString outStr = QString("First integration data matrix is ready. %1 msec").arg(timer->elapsed());
-    std::cout << outStr.toStdString() << std::endl;
-}
+//void File::writeFirstIntMatrixIsReady()
+//{
+//    QString outStr = QString("First integration data matrix is ready. %1 msec").arg(timer->elapsed());
+//    std::cout << outStr.toStdString() << std::endl;
+//}
 
-void File::writeSecIntMatrixIsReady()
-{
-    QString outStr = QString("Second integration data matrix is ready. %1 msec").arg(timer->elapsed());
-    std::cout << outStr.toStdString() << std::endl;
-}
+//void File::writeSecIntMatrixIsReady()
+//{
+//    QString outStr = QString("Second integration data matrix is ready. %1 msec").arg(timer->elapsed());
+//    std::cout << outStr.toStdString() << std::endl;
+//}
 
-void File::writeSettingsLoaded()
-{
-    QString outStr = QString("Settings form %1 loaded. %2 msec").arg("Settings.txt").arg(timer->elapsed());
-    std::cout << outStr.toStdString() << std::endl;
-}
+//void File::writeSettingsLoaded()
+//{
+//    QString outStr = QString("Settings form %1 loaded. %2 msec").arg("Settings.txt").arg(timer->elapsed());
+//    std::cout << outStr.toStdString() << std::endl;
+//}
