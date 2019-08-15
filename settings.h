@@ -2,9 +2,7 @@
 #define SETTINGS_H
 
 #include <QString>
-#include <QFile>
-#include <QDir>
-#include <QTextStream>
+#include <QStringList>
 
 class Settings
 {

@@ -15,6 +15,7 @@ int main()
     std::cout << "Starting software..." << std::endl;
 
     fileWork.readAllFiles(conv.getDataList());
+    fileWork.loadPotList();
 
     if(sett.getConvert())
     {
@@ -39,6 +40,8 @@ int main()
 
     std::cout << "Finished" << std::endl;
     std::cout << "This software was created by Evgeny Bondarenko (Minsk, 2019)" << std::endl;
+
+    system("pause");
 
     return 0;
 }

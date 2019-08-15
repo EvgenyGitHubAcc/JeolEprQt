@@ -3,11 +3,8 @@
 
 #include "settings.h"
 
-#include <QPointF>
 #include <QTextStream>
 #include <QVector>
-#include <QByteArray>
-#include <QList>
 
 struct Point
 {
@@ -29,8 +26,7 @@ public:
     Data(QStringList &);
     QVector<Point> getDataVect() const;
     void integrate();
-    int findLeftEdgeIndex(double);
-    int findRightEdgeIndex(double);
+    int findEdgeIndex(double);
 };
 
 QTextStream & operator<<(QTextStream &, const Data &);

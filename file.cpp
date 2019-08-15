@@ -1,4 +1,3 @@
-
 #include "file.h"
 
 File::File(QTime * _timer)
@@ -28,6 +27,19 @@ QStringList & File::loadSettings()
     return dataString;
 }
 
+void File::loadPotList()
+{
+    QString srcFile = QString("%1/%2").arg(QDir::currentPath()).arg("Potentials.txt");
+    QFile file(srcFile);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        return;
+    }
+    QTextStream inputStream(&file);
+    QString text = inputStream.readAll();
+    potList = text.split('\n');
+}
+
 void File::readAllFiles(QList<Data> & dataList)
 {
     dataString.clear();
@@ -51,19 +63,69 @@ void File::readAllFiles(QList<Data> & dataList)
 
 void File::writeAllFiles(QList<Data> & dataList)
 {
-    for(int i = 0; i < srcFiles.count(); ++i)
+
+    if(dataList.size() == potList.size())
     {
-        QString finFile = QString("%1/%2/%3").arg(QDir::currentPath()).arg("Fin").arg(srcFiles[i]);
-        QFile file(finFile);
-        if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+        for(int i = 0; i < srcFiles.count(); ++i)
         {
-            return;
+            QString finFile = QString("%1/%2/%3").arg(QDir::currentPath()).arg("Fin").arg(srcFiles[i]);
+            QFile file(finFile);
+            if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+            {
+                return;
+            }
+            QTextStream out(&file);
+            out << QString("%1\n%2\n").arg(srcFiles[i]).arg(potList[i]);
+            out << dataList[i];
+            writeFinishedFileName(srcFiles[i]);
+            file.close();
         }
-        QTextStream out(&file);
-        out << dataList[i];
-        writeFinishedFileName(srcFiles[i]);
-        file.close();
     }
+    else
+    {
+        for(int i = 0; i < srcFiles.count(); ++i)
+        {
+            QString finFile = QString("%1/%2/%3").arg(QDir::currentPath()).arg("Fin").arg(srcFiles[i]);
+            QFile file(finFile);
+            if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+            {
+                return;
+            }
+            QTextStream out(&file);
+            out << QString("%1\n").arg(srcFiles[i]);
+            out << dataList[i];
+            writeFinishedFileName(srcFiles[i]);
+            file.close();
+        }
+    }
+}
+
+QString File::genFileNameLine()
+{
+    QString line = srcFiles[0];
+    for(int i = 1; i < srcFiles.size(); ++i)
+    {
+        line += ' ';
+        line += srcFiles[i];
+    }
+    line += '\n';
+    return line;
+}
+
+QString File::genPotLine(int dataListSize)
+{
+    QString line;
+    if(dataListSize == potList.size())
+    {
+        line = potList[0];
+        for(int i = 1; i < potList.size(); ++i)
+        {
+            line += ' ';
+            line += potList[i];
+        }
+        line += '\n';
+    }
+    return line;
 }
 
 void File::writeFirstIntegrationMatrix(Converter & conv, double leftEdge = 0, double rightEdge = 0)
@@ -76,27 +138,21 @@ void File::writeFirstIntegrationMatrix(Converter & conv, double leftEdge = 0, do
     }
     QTextStream out(&file);
 
-    QString line = srcFiles[0];
-    for(int i = 1; i < srcFiles.size(); ++i)
-    {
-        line += ' ';
-        line += srcFiles[i];
-    }
-    line += '\n';
-    out << line;
+    out << genFileNameLine();
+
+    out << genPotLine(conv.getDataList().size());
 
     int leftIndex = 1, rightIndex = conv.getDataVectSize();
 
     if(leftEdge && rightEdge)
     {
-        leftIndex = conv.getDataList()[0].findLeftEdgeIndex(leftEdge);
-        rightIndex = conv.getDataList()[0].findRightEdgeIndex(rightEdge);
+        leftIndex = conv.getDataList()[0].findEdgeIndex(leftEdge);
+        rightIndex = conv.getDataList()[0].findEdgeIndex(rightEdge) - 1;
     }
 
     for(int i = leftIndex; i < rightIndex; ++i)
     {
-        line = QString("%1\n").arg(conv.createFirstIntMatrixRaw(i));
-        out << line;
+        out << QString("%1\n").arg(conv.createFirstIntMatrixRaw(i));
     }
     writeFirstIntMatrixIsReady();
     file.close();
@@ -112,27 +168,21 @@ void File::writeSecondIntegrationMatrix(Converter & conv, double leftEdge = 0, d
     }
     QTextStream out(&file);
 
-    QString line = srcFiles[0];
-    for(int i = 1; i < srcFiles.size(); ++i)
-    {
-        line += ' ';
-        line += srcFiles[i];
-    }
-    line += '\n';
-    out << line;
+    out << genFileNameLine();
+
+    out << genPotLine(conv.getDataList().size());
 
     int leftIndex = 1, rightIndex = conv.getDataVectSize();
 
     if(leftEdge && rightEdge)
     {
-        leftIndex = conv.getDataList()[0].findLeftEdgeIndex(leftEdge);
-        rightIndex = conv.getDataList()[0].findRightEdgeIndex(rightEdge);
+        leftIndex = conv.getDataList()[0].findEdgeIndex(leftEdge);
+        rightIndex = conv.getDataList()[0].findEdgeIndex(rightEdge) - 1;
     }
 
     for(int i = leftIndex; i < rightIndex; ++i)
     {
-        line = QString("%1\n").arg(conv.createSecIntMatrixRaw(i));
-        out << line;
+        out << QString("%1\n").arg(conv.createSecIntMatrixRaw(i));;
     }
     writeSecIntMatrixIsReady();
     file.close();
@@ -148,24 +198,17 @@ void File::writeTotalMatrix(Converter & conv)
     }
     QTextStream out(&file);
 
-    QString line = srcFiles[0];
-    for(int i = 1; i < srcFiles.size(); ++i)
-    {
-        line += ' ';
-        line += srcFiles[i];
-    }
-    line += '\n';
-    out << line;
+    out << genFileNameLine();
 
-    line = QString("%1\n").arg(conv.createMatrixRaw(0));
-    out << line;
+    out << genPotLine(conv.getDataList().size());
+
+    out << QString("%1\n").arg(conv.createMatrixRaw(0));
 
     int size = conv.getDataVectSize();
 
     for(int i = 1; i < size; ++i)
     {
-        line = QString("%1\n").arg(conv.createMatrixRaw(i));
-        out << line;
+        out << QString("%1\n").arg(conv.createMatrixRaw(i));
     }
     writeMatrixIsReady();
     file.close();
@@ -178,7 +221,7 @@ const QStringList & File::getSrcFiles()
 
 void File::purifyFile(QFile & file)
 {
-    QTextStream inputStream(&file);
+   QTextStream inputStream(&file);
    QStringList lines;
    QString line = inputStream.readLine();
    while(!line.contains("mT"))

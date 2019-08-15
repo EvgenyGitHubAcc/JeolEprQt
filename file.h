@@ -15,10 +15,12 @@ private:
     QTime * timer;
     QStringList srcFiles;
     QStringList dataString;
+    QStringList potList;
     void purifyFile(QFile &);
 public:
     File(QTime *);
     QStringList & loadSettings();
+    void loadPotList();
     void readAllFiles(QList<Data> &);
     void writeAllFiles(QList<Data> &);
     void writeFirstIntegrationMatrix(Converter &, double, double);
@@ -31,6 +33,8 @@ public:
     void writeMatrixIsReady();
     void writeFirstIntMatrixIsReady();
     void writeSecIntMatrixIsReady();
+    QString genPotLine(int);
+    QString genFileNameLine();
     const QStringList & getSrcFiles();
 };
 

@@ -36,7 +36,7 @@ QTextStream &operator<<(QTextStream & out, const Data & obj)
     QVector<Point> dataLocal = obj.getDataVect();
     for(int i = 0; i < dataLocal.size(); ++i)
     {
-         out << dataLocal[i].field << '\t' << dataLocal[i].intensity << '\n';
+        out << dataLocal[i].field << '\t' << dataLocal[i].intensity << '\n';
     }
     return out;
 }
@@ -75,12 +75,31 @@ void Data::integrate()
     }
 }
 
-int Data::findLeftEdgeIndex(double leftEdge)
+int Data::findEdgeIndex(double edge)
 {
-    return std::find_if(dataVect.begin(), dataVect.end(), [leftEdge](Point dataObj){return dataObj.field > leftEdge;}) - dataVect.begin();
-}
+    int leftIndex = 0, rightIndex = dataVect.size() - 1;
 
-int Data::findRightEdgeIndex(double rightEdge)
-{
-    return std::find_if(dataVect.begin(), dataVect.end(), [rightEdge](Point dataObj){return dataObj.field > rightEdge;}) - dataVect.begin() - 1;
+    int middleIndex;
+
+    while (rightIndex > leftIndex)
+    {
+        middleIndex = (leftIndex + rightIndex) / 2;
+
+        if (dataVect[middleIndex].field < edge)
+        {
+            leftIndex = middleIndex + 1;
+        }
+        else if (dataVect[middleIndex].field > edge)
+        {
+            rightIndex = middleIndex - 1;
+        }
+        else
+        {
+            return middleIndex;
+        }
+    }
+
+    return leftIndex;
+
+    //    return std::find_if(dataVect.begin(), dataVect.end(), [leftEdge](Point dataObj){return dataObj.field > leftEdge;}) - dataVect.begin();
 }
