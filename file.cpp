@@ -4,7 +4,7 @@
 File::File()
 {
     QDir fileInputPath = QDir(QString("%1/%2").arg(QDir::currentPath()).arg("Src"));
-    QStringList nameFilter("*.txt");
+    QStringList nameFilter("*.bin");
     srcFiles = fileInputPath.entryList(nameFilter);
 }
 
@@ -58,6 +58,20 @@ void File::readAllFiles(QList<Data> & dataList)
 
         Message::writeReadFileName(el);
         dataString.clear();
+    }
+}
+
+void File::readAllBinFiles(QList<Data> & dataList)
+{
+    foreach(const QString el, srcFiles)
+    {
+        QString srcFile = QString("%1/%2/%3").arg(QDir::currentPath()).arg("Src").arg(el);
+        std::shared_ptr<BinExtractor> binExtr = BinExtractor::createInstBinExtr();
+        Data obj;
+        binExtr->readBinFile(srcFile);
+        binExtr->parceBinData(obj);
+        dataList.append(obj);
+        Message::writeReadFileName(el);
     }
 }
 
