@@ -3,9 +3,12 @@
 
 #include <QStringList>
 
+enum FileType {TXT, BIN};
+
 class Settings
 {
 private:
+    static FileType fileType;
     static bool convert;
     static bool getMatrix;
     static bool integrateFirst;
@@ -20,6 +23,7 @@ public:
     static bool getGetMatrix();
     static double getLeftEdge();
     static double getRightEdge();
+    static FileType getFileType();
 };
 
 #endif // SETTINGS_H

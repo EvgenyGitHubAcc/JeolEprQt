@@ -62,6 +62,11 @@ QVector<Point> Data::getDataVect() const
     return dataVect;
 }
 
+void Data::setDataVect(QVector<Point> & tempVect)
+{
+    dataVect = std::move(tempVect);
+}
+
 void Data::integrate()
 {
     dataVect[0].firstIntegral = 0;

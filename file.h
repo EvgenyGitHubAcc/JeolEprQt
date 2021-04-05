@@ -9,6 +9,7 @@
 #include "data.h"
 #include "converter.h"
 #include "message.h"
+#include "binextractor.h"
 
 class File
 {
@@ -22,6 +23,7 @@ public:
     QStringList & loadSettings();
     void loadPotList();
     void readAllFiles(QList<Data> &);
+    void readAllBinFiles(QList<Data> &);
     void writeAllFiles(QList<Data> &);
     void writeFirstIntegrationMatrix(Converter &, double, double);
     void writeSecondIntegrationMatrix(Converter &, double, double);

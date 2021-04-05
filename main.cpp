@@ -2,6 +2,7 @@
 #include "file.h"
 #include "settings.h"
 #include "message.h"
+#include "binextractor.h"
 
 int main()
 {
@@ -18,7 +19,20 @@ int main()
 
     std::cout << "Starting software..." << std::endl;
 
-    fileWork.readAllFiles(conv.getDataList());
+    if(Settings::getFileType() == FileType::BIN)
+    {
+        fileWork.readAllBinFiles(conv.getDataList());
+    }
+    else if (Settings::getFileType() == FileType::TXT)
+    {
+        fileWork.readAllFiles(conv.getDataList());
+    }
+    else
+    {
+        std::cout << "Unable to define type of file. Exit" << std::endl;
+        return 1;
+    }
+
     fileWork.loadPotList();
 
     if(Settings::getConvert())
