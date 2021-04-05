@@ -2,7 +2,6 @@
 #include "file.h"
 #include "settings.h"
 #include "message.h"
-#include "binextractor.h"
 
 int main()
 {
