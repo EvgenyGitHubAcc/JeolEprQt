@@ -43,7 +43,7 @@ std::shared_ptr<BinExtractor> BinExtractor::createInstBinExtr()             //Im
     auto shrdPtr = weakPtr.lock();
     if(!shrdPtr)
     {
-        shrdPtr = std::make_shared<BinExtractor>(BinExtractor());
+        shrdPtr = std::shared_ptr<BinExtractor>(new BinExtractor());
         weakPtr = shrdPtr;
     }
     return shrdPtr;
