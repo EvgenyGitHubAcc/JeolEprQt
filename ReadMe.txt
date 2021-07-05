@@ -1,6 +1,6 @@
-EPR v1.0.1
+EPR v1.0.3
 How to use EPR software:
-1)Copy the source txt files to Src directory
+1)Copy the source txt files to Src directory. They should have .bin extension for binary files and .txt for text files.
 2)Open the file potentials.txt and put potentials if it's needed to be included in the matrix header.
 The amount of potentials lines should be the same as txt files count in Src folder. Otherwise it will
 be ignored
