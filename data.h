@@ -1,6 +1,8 @@
 #ifndef DATA_H
 #define DATA_H
 
+#define DOUBLE_PRECISION 6
+
 #include <QTextStream>
 #include <QVector>
 #include "settings.h"

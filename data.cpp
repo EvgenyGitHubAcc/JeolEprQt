@@ -37,7 +37,7 @@ QTextStream &operator<<(QTextStream & out, const Data & obj)
     QVector<Point> dataLocal = obj.getDataVect();
     for(int i = 0; i < dataLocal.size(); ++i)
     {
-        out << dataLocal[i].field << '\t' << dataLocal[i].intensity << '\n';
+        out << QString::number(dataLocal[i].field, 'f', DOUBLE_PRECISION) << '\t' << QString::number(dataLocal[i].intensity, 'f', DOUBLE_PRECISION) << '\n';
     }
     return out;
 }
@@ -85,7 +85,7 @@ void Data::integrateSecond()
     for(int i = 1; i < dataVect.size(); ++i)
     {
         deltaField = dataVect[i].field - dataVect[0].field;
-        dataVect[i].secondIntegral = dataVect[i - 1].secondIntegral + dataVect[i].intensity * deltaField;
+        dataVect[i].secondIntegral = dataVect[i - 1].secondIntegral + dataVect[i].firstIntegral * deltaField;
     }
 }
 

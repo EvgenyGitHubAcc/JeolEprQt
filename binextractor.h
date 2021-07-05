@@ -17,9 +17,9 @@ class BinExtractor
 private:
     static std::weak_ptr<BinExtractor> weakPtr;
     QByteArray binArr;
-    float first_X_Value = 0.0;
-    float deltaLast_X = 0.0;
-    float X_slope = 0.0;
+    double first_X_Value = 0.0;
+    double deltaLast_X = 0.0;
+    double X_slope = 0.0;
 
     QVector<Point> dataVect;
 

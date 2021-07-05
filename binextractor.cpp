@@ -31,7 +31,7 @@ void BinExtractor::parceSpectrum()
         if(!(j % 8))                                                        //Average data by 8 points
         {
             sum /= 8;
-            dataVect << Point(first_X_Value + k * X_slope, sum);
+            dataVect << Point(first_X_Value + (double)k * X_slope, sum);
             ++k;
             sum = 0.0;
         }

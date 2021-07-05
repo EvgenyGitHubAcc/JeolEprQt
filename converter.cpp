@@ -12,33 +12,33 @@ QList<Data> & Converter::getDataList()
 
 QString Converter::createFirstIntMatrixRaw(int rowNumber)
 {
-    QString row = QString::number(dataList[0].getDataVect()[rowNumber].field);
+    QString row = QString::number(dataList[0].getDataVect()[rowNumber].field, 'f', DOUBLE_PRECISION);
     foreach(Data el, dataList)
     {
         row += ' ';
-        row += QString::number(el.getDataVect()[rowNumber].firstIntegral);
+        row += QString::number(el.getDataVect()[rowNumber].firstIntegral, 'f', DOUBLE_PRECISION);
     }
     return row;
 }
 
 QString Converter::createSecIntMatrixRaw(int rowNumber)
 {
-    QString row = QString::number(dataList[0].getDataVect()[rowNumber].field);
+    QString row = QString::number(dataList[0].getDataVect()[rowNumber].field, 'f', DOUBLE_PRECISION);
     foreach(Data el, dataList)
     {
         row += ' ';
-        row += QString::number(el.getDataVect()[rowNumber].secondIntegral);
+        row += QString::number(el.getDataVect()[rowNumber].secondIntegral, 'f', DOUBLE_PRECISION);
     }
     return row;
 }
 
 QString Converter::createMatrixRaw(int rowNumber)
 {
-    QString row = QString::number(dataList[0].getDataVect()[rowNumber].field);
+    QString row = QString::number(dataList[0].getDataVect()[rowNumber].field, 'f', DOUBLE_PRECISION);
     foreach(Data el, dataList)
     {
         row += ' ';
-        row += QString::number(el.getDataVect()[rowNumber].intensity);
+        row += QString::number(el.getDataVect()[rowNumber].intensity, 'f', DOUBLE_PRECISION);
     }
     return row;
 }
