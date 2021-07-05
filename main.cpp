@@ -11,6 +11,7 @@ int main()
     Converter conv;
 
     Settings::loadSettings(fileWork.loadSettings());
+    fileWork.getFileNameInSrcDir();
 
     Message::setTimer(&timer);
 
@@ -29,6 +30,12 @@ int main()
     else
     {
         std::cout << "Unable to define type of file. Exit" << std::endl;
+        return 1;
+    }
+
+    if(fileWork.getSrcFiles().isEmpty())
+    {
+        std::cout << "There are no files in source file directory" << std::endl;
         return 1;
     }
 

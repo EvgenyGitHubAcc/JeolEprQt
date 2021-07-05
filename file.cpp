@@ -3,9 +3,7 @@
 
 File::File()
 {
-    QDir fileInputPath = QDir(QString("%1/%2").arg(QDir::currentPath()).arg("Src"));
-    QStringList nameFilter("*.bin");
-    srcFiles = fileInputPath.entryList(nameFilter);
+
 }
 
 QStringList & File::loadSettings()
@@ -83,6 +81,7 @@ void File::writeAllFiles(QList<Data> & dataList)
         for(int i = 0; i < srcFiles.count(); ++i)
         {
             QString finFile = QString("%1/%2/%3").arg(QDir::currentPath()).arg("Fin").arg(srcFiles[i]);
+            finFile.truncate(finFile.lastIndexOf('.'));         //Remove extension
             QFile file(finFile);
             if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
             {
@@ -226,6 +225,21 @@ void File::writeTotalMatrix(Converter & conv)
     }
     Message::writeMatrixIsReady();
     file.close();
+}
+
+void File::getFileNameInSrcDir()
+{
+    QDir fileInputPath = QDir(QString("%1/%2").arg(QDir::currentPath()).arg("Src"));
+    QStringList nameFilter;
+    if(Settings::getFileType() == FileType::BIN)
+    {
+        nameFilter.append("*.bin");
+    }
+    else if (Settings::getFileType() == FileType::TXT)
+    {
+        nameFilter.append("*.txt");
+    }
+    srcFiles = fileInputPath.entryList(nameFilter);
 }
 
 const QStringList & File::getSrcFiles()

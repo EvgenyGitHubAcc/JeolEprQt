@@ -27,7 +27,8 @@ public:
     Data(QStringList &);
     QVector<Point> getDataVect() const;
     void setDataVect(QVector<Point> &);
-    void integrate();
+    void integrateFirst();
+    void integrateSecond();
     int findEdgeIndex(double);
 };
 

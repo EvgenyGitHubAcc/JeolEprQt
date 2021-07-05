@@ -29,6 +29,7 @@ public:
     void writeSecondIntegrationMatrix(Converter &, double, double);
     void writeSettingsLoaded();
     void writeTotalMatrix(Converter &);
+    void getFileNameInSrcDir();
     QString genPotLine(int);
     QString genFileNameLine();
     const QStringList & getSrcFiles();

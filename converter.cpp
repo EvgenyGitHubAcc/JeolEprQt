@@ -52,7 +52,8 @@ void Converter::integrateAllData(const QStringList & srcFiles)
 {
     for(int i = 0; i < dataList.size(); ++i)
     {
-        dataList[i].integrate();
+        dataList[i].integrateFirst();
+        dataList[i].integrateSecond();
         Message::writeFileIntegrated(srcFiles[i]);
     }
 }
