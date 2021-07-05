@@ -8,7 +8,6 @@
 #include "settings.h"
 
 
-
 struct Point
 {
     double field;
