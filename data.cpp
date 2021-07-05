@@ -67,24 +67,14 @@ void Data::setDataVect(QVector<Point> & tempVect)
     dataVect = std::move(tempVect);
 }
 
-void Data::integrateFirst()
+void Data::integrate()
 {
-    dataVect[0].firstIntegral = 0.0;
+    dataVect[0].firstIntegral = 0.0, dataVect[0].secondIntegral = 0.0;
     double deltaField = 0.0;
     for(int i = 1; i < dataVect.size(); ++i)
     {
         deltaField = dataVect[i].field - dataVect[i - 1].field;
         dataVect[i].firstIntegral = dataVect[i - 1].firstIntegral + dataVect[i].intensity * deltaField;
-    }
-}
-
-void Data::integrateSecond()
-{
-    dataVect[0].secondIntegral = 0;
-    double deltaField = 0;
-    for(int i = 1; i < dataVect.size(); ++i)
-    {
-        deltaField = dataVect[i].field - dataVect[i - 1].field;
         dataVect[i].secondIntegral = dataVect[i - 1].secondIntegral + dataVect[i].firstIntegral * deltaField;
     }
 }
